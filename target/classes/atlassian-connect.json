@@ -1,0 +1,32 @@
+{
+	"key": "jira-twilio-notif",
+	"baseUrl": "https://ec42a570.ngrok.io",
+	"name": "Jira Twilio Notif",
+	"authentication": {
+		"type": "jwt"
+	},
+	"lifecycle": {
+		"installed": "/installed",
+		"uninstalled": "/uninstalled"
+	},
+	"scopes": [
+		"READ"
+	],
+	"modules": {
+		"generalPages": [
+			{
+				"url": "/hello",
+				"key": "hello",
+				"location": "system.top.navigation.bar",
+				"name": {
+					"value": "hello"
+				},
+				"conditions": [
+					{
+						"condition": "user_is_logged_in"
+					}
+				]
+			}
+		]
+	}
+}
