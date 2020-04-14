@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script src="https://connect-cdn.atl-paas.net/all.js" async></script>
+<title>Jira Twilio Notification Settings</title>
+</head>
+<body>
+
+	<div>
+		<h1>Jira Twilio Notification Settings</h1>
+		 <form method="post" th:object="${settingModel}" th:action="@{/settings}">
+			<div>
+				<label>Activate SMS notifications</label>
+				<div
+					th:each="model : ${T(com.notif.twilio.jira.ui.models.ActivateSMSNotif).values()}">
+					<div>
+						<input type="radio" th:field="*{ActivateSMSNotif}" th:value="${model}"> 
+						<label th:for="${#ids.prev('ActivateSMSNotif')}" th:text="${model}">model</label>
+					</div>
+				</div>
+			</div>
+        <button type="submit">Submit</button>
+    </form>
+	</div>
+
+</body>
+</html>

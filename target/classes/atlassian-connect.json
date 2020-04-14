@@ -1,6 +1,6 @@
 {
 	"key": "jira-twilio-notif",
-	"baseUrl": "https://650b925e.ngrok.io",
+	"baseUrl": "https://a2dd26f6.ngrok.io",
 	"name": "Jira Twilio Notif",
 	"authentication": {
 		"type": "jwt"
@@ -25,7 +25,7 @@
 		"jiraProjectAdminTabPanels": [
 			{
 				"location": "jira-twilio-app-settings-btn",
-				"url": "/greeting",
+				"url": "/settings",
 				"weight": 100,
 				"name": {
 					"value": "Jira Twilio Settings Page"
