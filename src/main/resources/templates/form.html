@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script src="https://connect-cdn.atl-paas.net/all.js" async></script>
+<title>Getting Started: Serving Web Content</title>
+</head>
+<body>
+
+	<h1>Result</h1>
+    <p th:text="'id: ' + ${greeting.id}" />
+    <p th:text="'content: ' + ${greeting.content}" />
+    <a href="/greeting">Submit another message</a>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 {
 	"key": "jira-twilio-notif",
-	"baseUrl": "https://ec42a570.ngrok.io",
+	"baseUrl": "https://650b925e.ngrok.io",
 	"name": "Jira Twilio Notif",
 	"authentication": {
 		"type": "jwt"
@@ -13,19 +13,24 @@
 		"READ"
 	],
 	"modules": {
-		"generalPages": [
+		"webSections": [
 			{
-				"url": "/hello",
-				"key": "hello",
-				"location": "system.top.navigation.bar",
+				"key": "jira-twilio-app-settings-btn",
+				"location": "atl.jira.proj.config",
 				"name": {
-					"value": "hello"
+					"value": "Jira Twilio Settings"
+				}
+			}
+		],
+		"jiraProjectAdminTabPanels": [
+			{
+				"location": "jira-twilio-app-settings-btn",
+				"url": "/greeting",
+				"weight": 100,
+				"name": {
+					"value": "Jira Twilio Settings Page"
 				},
-				"conditions": [
-					{
-						"condition": "user_is_logged_in"
-					}
-				]
+				"key": "jira-twilio-admin-panel"
 			}
 		]
 	}
