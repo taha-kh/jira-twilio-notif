@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class JiraUserDto {
+public class SettingDto  {
 	private String clientKey;
-	private String baseUrl;
+	private boolean smsOnIssueCreated;
 }
