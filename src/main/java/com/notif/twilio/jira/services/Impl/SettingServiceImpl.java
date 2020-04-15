@@ -28,12 +28,14 @@ public class SettingServiceImpl implements SettingService{
 	}
 
 	@Override
-	public SettingDto getSetting(String clientKey) {
+	public SettingDto getSetting(String userAccountId) {
 		SettingDto settingDto = new SettingDto();
 		
-		Setting setting = settingRepository.findById(clientKey).orElse(null);
-		BeanUtils.copyProperties(setting, settingDto);
-		
+		if (userAccountId != null) {
+			Setting setting = settingRepository.findById(userAccountId).orElse(null);
+			BeanUtils.copyProperties(setting, settingDto);
+		}
+				
 		return settingDto;
 	}
 

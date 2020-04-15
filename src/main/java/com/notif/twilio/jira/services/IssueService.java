@@ -1,7 +1,8 @@
 package com.notif.twilio.jira.services;
 
-import com.notif.twilio.jira.shared.dto.IssueDto;
+import com.atlassian.connect.spring.AtlassianHostUser;
+import com.notif.twilio.jira.shared.dto.WebhookIssueDto;
 
 public interface IssueService {
-	void onIssueCreated(IssueDto issueDto);
+	void onIssueCreated(WebhookIssueDto webhookIssueDto, AtlassianHostUser hostUser);
 }

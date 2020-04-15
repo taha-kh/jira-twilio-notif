@@ -1,6 +1,6 @@
 {
 	"key": "jira-twilio-notif",
-	"baseUrl": "https://5e13241d.ngrok.io",
+	"baseUrl": "https://2030caff.ngrok.io",
 	"name": "Jira Twilio Notif",
 	"authentication": {
 		"type": "jwt"

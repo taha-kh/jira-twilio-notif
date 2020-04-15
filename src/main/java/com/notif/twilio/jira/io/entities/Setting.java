@@ -11,6 +11,8 @@ import lombok.Setter;
 @Entity
 public class Setting {
 	@Id
+	private String userAccountId;
+	
 	private String clientKey;
 	
 	private boolean smsOnIssueCreated;

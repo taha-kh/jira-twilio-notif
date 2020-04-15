@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class IssueDto {
-	private String id;
-	private String Key;
+public class WebhookIssueDto {
+	private String timestamp;
+	private Userdto user;
+	private IssueDto issue;
 }

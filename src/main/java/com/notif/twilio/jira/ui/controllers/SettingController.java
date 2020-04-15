@@ -32,6 +32,7 @@ public class SettingController {
 	public String handleSettings(@AuthenticationPrincipal AtlassianHostUser hostUser,
 			@ModelAttribute("settingModel") SettingModel settingModel) {
 		SettingDto settingDto = new SettingDto();
+		settingDto.setUserAccountId(hostUser.getUserAccountId().orElse(null));
 		settingDto.setClientKey(hostUser.getHost().getClientKey());
 		if (settingModel.getActivateSMSNotif() == ActivateSMSNotif.Yes)
 			settingDto.setSmsOnIssueCreated(true);
