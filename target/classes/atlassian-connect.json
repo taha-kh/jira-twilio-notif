@@ -1,6 +1,6 @@
 {
 	"key": "jira-twilio-notif",
-	"baseUrl": "https://c8dd3a12.ngrok.io",
+	"baseUrl": "https://2e6b2653.ngrok.io",
 	"name": "Jira Twilio Notif",
 	"authentication": {
 		"type": "jwt"
@@ -10,7 +10,8 @@
 		"uninstalled": "/uninstalled"
 	},
 	"scopes": [
-		"READ"
+		"READ",
+		"WRITE"
 	],
 	"modules": {
 		"webSections": [
@@ -31,6 +32,12 @@
 					"value": "Jira Twilio Settings Page"
 				},
 				"key": "jira-twilio-admin-panel"
+			}
+		],
+		"webhooks": [
+			{
+				"event": "jira:issue_created",
+				"url": "/issue-created"
 			}
 		]
 	}

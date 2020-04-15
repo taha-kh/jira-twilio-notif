@@ -31,7 +31,6 @@ public class JiraTwilioNotifSettingsController {
 	@GetMapping("/settings")
 	public String getSettingsPage(@AuthenticationPrincipal AtlassianHostUser hostUser, Model model) {		
 		model.addAttribute("settingModel", new SettingModel());
-		
 		JiraUserDto jiraUserDto = new JiraUserDto();
 		jiraUserDto.setClientKey(hostUser.getHost().getClientKey());
 		jiraUserDto.setBaseUrl(hostUser.getHost().getBaseUrl());
