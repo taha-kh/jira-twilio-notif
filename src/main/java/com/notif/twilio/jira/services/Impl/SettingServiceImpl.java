@@ -18,13 +18,14 @@ public class SettingServiceImpl implements SettingService{
 	
 	// == Public Methods ==
 	@Override
-	public void saveSetting(SettingDto settingDto) {
-		Setting setting = new Setting();
-		
-		if (!settingRepository.existsById(settingDto.getClientKey())) {
-			BeanUtils.copyProperties(settingDto, setting);
-			settingRepository.save(setting);
-		}
+	public void saveSetting(SettingDto settingDto) {	
+		if (settingDto != null) {
+			if (!settingRepository.existsById(settingDto.getAccountId())) {
+				Setting setting = new Setting();
+				BeanUtils.copyProperties(settingDto, setting);
+				settingRepository.save(setting);
+			}
+		}		
 	}
 
 	@Override

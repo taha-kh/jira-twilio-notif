@@ -7,21 +7,23 @@
 <body>
 
 	<div>
-		<h1>Jira Twilio Notification Settings :</h1>
-		 <form method="post" th:object="${settingModel}" th:action="@{/settings}">
+		<h1>Jira Twilio SMS Notifications Settings :</h1>
+		<p>If you want to be notified by SMS for the creation of a new
+			issue appearing in this project, check the box and enter your phone
+			number</p>
+		<form method="post" th:object="${settingModel}"
+			th:action="@{/settings}">
 			<div>
-				<label>Activate SMS notifications</label>
-				<div
-					th:each="model : ${T(com.notif.twilio.jira.ui.models.ActivateSMSNotif).values()}">
-					<div>
-						<input type="radio" th:field="*{ActivateSMSNotif}" th:value="${model}"> 
-						<label th:for="${#ids.prev('ActivateSMSNotif')}" th:text="${model}">model</label>
-					</div>
-				</div>
+			<input type="text" name="projectId" th:value="${settingModel.projectId}" hidden="true"/>
+			<input type="text" name="projectKey" th:value="${settingModel.projectKey}" hidden="true"/>
+			<label for="tel">Phone number :</label>
+				<input name="tel" type="text" th:value="${tel}">
+				<label for="${notifyUserbySms}">Notify me by SMS when an issue is created  :</label>
+				<input type="checkbox" name="notifyUserbySms" th:checked="${notifyUserbySms}"/>
 			</div>
-			
-        <button type="submit">Submit</button>
-    </form>
+
+			<button type="submit">Save Settings</button>
+		</form>
 	</div>
 </body>
 </html>

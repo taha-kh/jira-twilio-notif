@@ -2,6 +2,7 @@ package com.notif.twilio.jira.io.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,12 +10,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@IdClass(SettingKey.class)
 public class Setting {
 	@Id
-	private String userAccountId;
+	private String accountId;
 	
-	private String clientKey;
+	@Id
+	private String projectId;
 	
-	private boolean smsOnIssueCreated;
+	private boolean notifyBySms;
 	
+	private String projectKey;	
 }

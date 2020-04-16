@@ -22,11 +22,11 @@ public class IssueServiceImpl implements IssueService {
 	// == Public Methods ==
 	@Override
 	public void onIssueCreated(WebhookIssueDto webhookssueDto, AtlassianHostUser hostUser) {
-		SettingDto settingdto = settingService.getSetting(hostUser.getUserAccountId().orElse(null));
-		if (settingdto != null && settingdto.isSmsOnIssueCreated()) {
-			log.info("Issue Created. Id : " + webhookssueDto.getIssue().getId() + " Key : " + webhookssueDto.getIssue().getKey());
-			log.info("Username : " + webhookssueDto.getUser().getUsername());
-		}		
+//		SettingDto settingdto = settingService.getSetting(hostUser.getUserAccountId().orElse(null));
+//		if (settingdto != null && settingdto.isSmsOnIssueCreated()) {
+//			log.info("Issue Created. Id : " + webhookssueDto.getIssue().getId() + " Key : " + webhookssueDto.getIssue().getKey());
+//			log.info("Username : " + webhookssueDto.getUser().getUsername());
+//		}		
 	}
 
 }

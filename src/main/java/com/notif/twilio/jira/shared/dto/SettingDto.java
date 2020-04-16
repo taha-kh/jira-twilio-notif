@@ -5,8 +5,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SettingDto  {
-	private String userAccountId;
-	private String clientKey;
-	private boolean smsOnIssueCreated;
+public class SettingDto {
+
+	private String accountId;
+
+	private boolean notifyBySms;
+
+	private String projectId;
+
+	private String projectKey;
 }
