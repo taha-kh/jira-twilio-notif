@@ -1,6 +1,6 @@
 {
 	"key": "jira-twilio-notif",
-	"baseUrl": "https://2030caff.ngrok.io",
+	"baseUrl": "https://16b8b6b8.ngrok.io",
 	"name": "Jira Twilio Notif",
 	"authentication": {
 		"type": "jwt"
@@ -26,7 +26,7 @@
 		"jiraProjectAdminTabPanels": [
 			{
 				"location": "jira-twilio-app-settings-btn",
-				"url": "/settings",
+				"url": "/settings?projectId={project.id}&projectKey={project.key}",
 				"weight": 100,
 				"name": {
 					"value": "Jira Twilio Settings Page"
@@ -38,6 +38,10 @@
 			{
 				"event": "jira:issue_created",
 				"url": "/issue-created"
+			},
+			{
+				"event": "connect_addon_enabled",
+				"url": "/addon-installed"
 			}
 		]
 	}

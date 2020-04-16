@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.atlassian.connect.spring.AtlassianHostUser;
 import com.notif.twilio.jira.services.SettingService;
@@ -23,7 +24,8 @@ public class SettingController {
 
 	// == Rest Controllers ==
 	@GetMapping("/settings")
-	public String getSettingsPage(@AuthenticationPrincipal AtlassianHostUser hostUser, Model model) {
+	public String getSettingsPage(@AuthenticationPrincipal AtlassianHostUser hostUser, Model model,
+			@RequestParam("projectId") String projectId, @RequestParam("projectKey") String projectKey) {
 		model.addAttribute("settingModel", new SettingModel());
 		return "settings";
 	}
@@ -38,9 +40,9 @@ public class SettingController {
 			settingDto.setSmsOnIssueCreated(true);
 		else
 			settingDto.setSmsOnIssueCreated(false);
-		
+
 		settingService.saveSetting(settingDto);
-		
+
 		return "settingsvalidation";
 	}
 }

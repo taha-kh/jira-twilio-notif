@@ -7,5 +7,8 @@ import lombok.Getter;
 @Getter
 @Setter
 public class Userdto {
+	private String accountId;
 	private String username;
+	private String key;
+	private String tel;
 }
