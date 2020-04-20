@@ -11,8 +11,10 @@ public class SettingModel {
 	private String projectId;
 	private String projectKey;
 	
-	public SettingModel(String projectId, String projectKey) {
+	public SettingModel(String projectId, String projectKey, boolean notifyUserbySms, String tel) {
 		this.projectId = projectId;
 		this.projectKey = projectKey;
+		this.notifyUserbySms = notifyUserbySms;
+		this.tel = tel;
 	}
 }

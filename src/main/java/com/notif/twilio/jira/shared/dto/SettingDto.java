@@ -14,4 +14,6 @@ public class SettingDto {
 	private String projectId;
 
 	private String projectKey;
+	
+	private Userdto userDto;
 }

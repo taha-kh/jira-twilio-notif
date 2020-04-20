@@ -1,7 +1,9 @@
 package com.notif.twilio.jira.io.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Setter;
@@ -21,4 +23,7 @@ public class User {
 	private String key;
 	
 	private String tel;
+	
+	@OneToOne(mappedBy = "jiraUser", cascade= CascadeType.ALL)
+	private Setting setting;
 }

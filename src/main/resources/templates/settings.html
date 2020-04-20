@@ -1,28 +1,64 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<link rel="stylesheet" href="https://unpkg.com/@atlaskit/css-reset@2.0.0/dist/bundle.css" media="all">
+<link rel="stylesheet" href="../styles/styles.css" media="all">
 <script src="https://connect-cdn.atl-paas.net/all.js" async></script>
 <title>Jira Twilio Notification Settings</title>
 </head>
 <body>
 
 	<div>
-		<h1>Jira Twilio SMS Notifications Settings :</h1>
+		<h1>Jira Twilio SMS Notifications Settings</h1>
 		<p>If you want to be notified by SMS for the creation of a new
 			issue appearing in this project, check the box and enter your phone
 			number</p>
-		<form method="post" th:object="${settingModel}"
-			th:action="@{/settings}">
+		<form method="post" th:object="${settingModel}" th:action="@{/settings}" style="text-align: center;">
 			<div>
-			<input type="text" name="projectId" th:value="${settingModel.projectId}" hidden="true"/>
-			<input type="text" name="projectKey" th:value="${settingModel.projectKey}" hidden="true"/>
-			<label for="tel">Phone number :</label>
-				<input name="tel" type="text" th:value="${tel}">
-				<label for="${notifyUserbySms}">Notify me by SMS when an issue is created  :</label>
-				<input type="checkbox" name="notifyUserbySms" th:checked="${notifyUserbySms}"/>
+				<input type="text" name="projectId" th:value="${settingModel.projectId}" hidden="true" /> 
+				<input type="text" name="projectKey" th:value="${settingModel.projectKey}" hidden="true" /> 
+				
+				<div>
+				<label for="tel" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+    color: #5e6c84;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    float: none;
+    margin: 0 16px 0 0;
+    display: block;   
+    width: auto;">Phone number</label> 
+				<input name="tel" type="text" th:value="${tel}" th:field="${settingModel.tel}" style="height: 32px;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+    color: #172b4d;
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 20px;
+    background-color: #f4f5f7;
+    border: 1px solid #dfe1e6;
+    padding: 4px 7px 5px;"> <br/><br/>
+				</div>
+				
+				<div>
+					<label for="notifyUserbySms" style="font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+    color: #5e6c84;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    float: none;
+    margin: 0 16px 0 0;
+    display: block;   
+    width: auto;">Notify me by SMS when an issue is created</label> 
+					<input type="checkbox" name="notifyUserbySms" th:checked="${notifyUserbySms}" th:field="${settingModel.notifyUserbySms}" /><br/><br/>
+				</div>
 			</div>
 
-			<button type="submit">Save Settings</button>
+			<button type="submit" style="background: #3572b0;
+    border-color: transparent;
+    color: #fff;
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;">Save Settings</button>
 		</form>
 	</div>
 </body>

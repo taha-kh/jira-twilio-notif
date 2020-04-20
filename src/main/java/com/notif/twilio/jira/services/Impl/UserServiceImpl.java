@@ -28,4 +28,22 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
+	@Override
+	public Userdto findUserById(String accountId) {
+		Userdto userDto  = new Userdto();
+		User user = userRepository.findById(accountId).orElse(null);
+		BeanUtils.copyProperties(user, userDto);
+		return userDto;
+	}
+
+	@Override
+	public void updateUser(Userdto userDto) {
+		if(userDto != null) {
+			User user = userRepository.findById(userDto.getAccountId()).orElse(null);
+			if(user != null) {
+				user.setTel(userDto.getTel());
+				userRepository.save(user);
+			}
+		}
+	}
 }
