@@ -8,6 +8,7 @@ import com.notif.twilio.jira.io.entities.Setting;
 import com.notif.twilio.jira.io.entities.User;
 import com.notif.twilio.jira.io.repositories.SettingRepository;
 import com.notif.twilio.jira.io.repositories.UserRepository;
+import com.notif.twilio.jira.services.PhoneVerificationService;
 import com.notif.twilio.jira.services.SettingService;
 import com.notif.twilio.jira.services.UserService;
 import com.notif.twilio.jira.shared.dto.SettingDto;
@@ -25,6 +26,9 @@ public class SettingServiceImpl implements SettingService{
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PhoneVerificationService phoneVerificationService;
 	
 	// == Public Methods ==
 	@Override
@@ -65,8 +69,18 @@ public class SettingServiceImpl implements SettingService{
 
 	@Override
 	public void handleSetting(SettingDto settingDto, Userdto userdto) {
-		userService.updateUser(userdto);
+		verifyPhoneNumber(userdto);
+		userService.updateUser(userdto);		
 		saveSetting(settingDto, userdto);
 	}
 
+	// == Private Methods ==
+	private void verifyPhoneNumber(Userdto userdto) {
+		Userdto currentUser = userService.findUserById(userdto.getAccountId());
+		if (currentUser != null) {
+			if (currentUser.getTel() != userdto.getTel()) {
+				phoneVerificationService.callTwilioVerificationService(userdto.getTel());
+			}
+		}		
+	}
 }
