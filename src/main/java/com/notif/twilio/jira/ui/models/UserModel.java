@@ -1,15 +1,13 @@
-package com.notif.twilio.jira.shared.dto;
-
-import lombok.Setter;
+package com.notif.twilio.jira.ui.models;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-public class Userdto {
+public class UserModel {
 	private String accountId;
 	private String username;
 	private String key;
 	private String tel;
-	private boolean telChecked;
 }

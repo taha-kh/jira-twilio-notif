@@ -6,14 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SettingDto {
-
 	private String accountId;
-
 	private boolean notifyBySms;
-
 	private String projectId;
-
 	private String projectKey;
-	
-	private Userdto userDto;
+	private Userdto user;
 }

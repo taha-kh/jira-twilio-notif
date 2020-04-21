@@ -4,9 +4,7 @@ import com.notif.twilio.jira.shared.dto.SettingDto;
 import com.notif.twilio.jira.shared.dto.Userdto;
 
 public interface SettingService {
-	void saveSetting(SettingDto settingDto, Userdto userDto);
-
-	SettingDto getSetting(String clientKey);
-
-	void handleSetting(SettingDto settingDto, Userdto userdto);
+	void saveSetting(SettingDto settingDto);
+	SettingDto getSetting(String accountId);
+	boolean handleSetting(SettingDto settingDto);
 }

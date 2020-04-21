@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="https://unpkg.com/@atlaskit/css-reset@2.0.0/dist/bundle.css" media="all">
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<script src="https://connect-cdn.atl-paas.net/all.js" async></script>
+<title>Jira Twilio Notification Settings</title>
+</head>
+<body>
+
+	<div class="setting-container">
+		<h1>Jira Twilio SMS Notifications Settings</h1>
+		<p>If you want to be notified by SMS for the creation of a new
+			issue appearing in this project, check the box and enter your phone
+			number</p><br/><br/>
+		<div class="form-container">
+			<form method="post" th:object="${verifyPhoneModel}" th:action="@{/verifyphone}" style="text-align: center;">
+				<div>
+					<div>
+					<label for="verificationCode">Verification Code</label> 
+					<input name="verificationCode" type="text" th:value="${verificationCode}" class="twilio-input-text"> <br/><br/>
+					</div>
+				</div>
+	
+				<button type="submit" class="twilio-submit-btn">Verify code</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

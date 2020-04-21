@@ -13,15 +13,17 @@ import com.notif.twilio.jira.shared.dto.Userdto;
 public class AddOnInstallationController {
 
 	// == Fields ==
+	
 	@Autowired
 	private UserService userService;
-	
-	
+
 	// == Rest Controllers ==
+
+	// Register and save user Account Id on AddOn installation
 	@PostMapping("/addon-installed")
 	public void onAddOnInstalled(@AuthenticationPrincipal AtlassianHostUser hostUser) {
 		Userdto userDto = new Userdto();
-		userDto.setAccountId(hostUser.getUserAccountId().orElse(null));		
-		userService.saveUser(userDto);		
+		userDto.setAccountId(hostUser.getUserAccountId().orElse(null));
+		userService.saveUser(userDto);
 	}
 }

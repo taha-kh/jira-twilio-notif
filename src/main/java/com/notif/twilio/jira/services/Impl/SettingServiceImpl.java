@@ -15,72 +15,78 @@ import com.notif.twilio.jira.shared.dto.SettingDto;
 import com.notif.twilio.jira.shared.dto.Userdto;
 
 @Service
-public class SettingServiceImpl implements SettingService{
+public class SettingServiceImpl implements SettingService {
 
 	// == Fields ==
 	@Autowired
 	private SettingRepository settingRepository;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private PhoneVerificationService phoneVerificationService;
-	
+
 	// == Public Methods ==
 	@Override
-	public void saveSetting(SettingDto settingDto, Userdto userDto) {	
+	public void saveSetting(SettingDto settingDto) {
 		if (settingDto != null) {
-			Setting setting = new Setting();				
+			Setting setting = new Setting();
 			BeanUtils.copyProperties(settingDto, setting);
-			if (!settingRepository.existsById(settingDto.getAccountId())) {										
-				User user = userRepository.findById(setting.getAccountId()).orElse(null);
-				if (user != null ) {
-					// Save Settings
-					setting.setJiraUser(user);
-					settingRepository.save(setting);
-				}else {
-					// Create the new user and save settings
-					userDto.setAccountId(settingDto.getAccountId());
-					userService.saveUser(userDto);
-					handleSetting(settingDto, userDto);					
-				}				
-			}else {
-				// Update Setting
-				settingRepository.save(setting);
-			}
-		}		
+			User user = new User();
+			user.setAccountId(settingDto.getUser().getAccountId());
+			user.setTel(settingDto.getUser().getTel());
+			setting.setJiraUser(user);
+			settingRepository.save(setting);
+		}
 	}
 
+	// Return a Setting of a specific User.
 	@Override
-	public SettingDto getSetting(String userAccountId) {
+	public SettingDto getSetting(String accountId) {
 		SettingDto settingDto = new SettingDto();
-		
-		if (userAccountId != null) {
-			Setting setting = settingRepository.findById(userAccountId).orElse(null);
-			BeanUtils.copyProperties(setting, settingDto);
+
+		if (accountId != null) {
+			Setting setting = settingRepository.findById(accountId).orElse(null);
+
+			if (setting != null) {
+				BeanUtils.copyProperties(setting, settingDto);
+				settingDto.setUser(userService.findUserById(accountId));
+			} else {
+				settingDto = null;
+			}
 		}
-				
+
 		return settingDto;
 	}
 
+	// Saves User and Settings if not exists
+	// Return true if we must check the phone number.
 	@Override
-	public void handleSetting(SettingDto settingDto, Userdto userdto) {
-		verifyPhoneNumber(userdto);
-		userService.updateUser(userdto);		
-		saveSetting(settingDto, userdto);
-	}
+	public boolean handleSetting(SettingDto settingDto) {
 
-	// == Private Methods ==
-	private void verifyPhoneNumber(Userdto userdto) {
-		Userdto currentUser = userService.findUserById(userdto.getAccountId());
-		if (currentUser != null) {
-			if (currentUser.getTel() != userdto.getTel()) {
-				phoneVerificationService.callTwilioVerificationService(userdto.getTel());
+		if (settingDto.getUser().getAccountId() != null) {
+			// Check if user exists, if not save it.
+			Userdto user = userService.findUserById(settingDto.getUser().getAccountId());
+			if (user == null) {
+				userService.saveUser(user);
 			}
-		}		
+
+			// Save User Settings
+			saveSetting(settingDto);
+
+			// Check if the user has changes his phone number
+			String newPhoneNumber = settingDto.getUser().getTel();
+			if (user.getTel() != newPhoneNumber) {
+				userService.updateUser(settingDto.getUser());
+				phoneVerificationService.callTwilioVerificationService(newPhoneNumber);
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+
 	}
 }

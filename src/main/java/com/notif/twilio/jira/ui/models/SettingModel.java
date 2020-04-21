@@ -6,15 +6,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SettingModel {
-	private String tel;
-	private boolean notifyUserbySms;
+	private String accountId;
+	private boolean notifyBySms;
 	private String projectId;
 	private String projectKey;
+	private UserModel user;
 	
-	public SettingModel(String projectId, String projectKey, boolean notifyUserbySms, String tel) {
+	public SettingModel() {}
+	
+	public SettingModel(String projectId, String projectKey) {
 		this.projectId = projectId;
 		this.projectKey = projectKey;
-		this.notifyUserbySms = notifyUserbySms;
-		this.tel = tel;
 	}
 }
