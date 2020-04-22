@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.notif.twilio.jira.io.entities.Setting;
 import com.notif.twilio.jira.io.entities.User;
 import com.notif.twilio.jira.io.repositories.SettingRepository;
-import com.notif.twilio.jira.io.repositories.UserRepository;
 import com.notif.twilio.jira.services.PhoneVerificationService;
 import com.notif.twilio.jira.services.SettingService;
 import com.notif.twilio.jira.services.UserService;
@@ -28,7 +27,7 @@ public class SettingServiceImpl implements SettingService {
 	private PhoneVerificationService phoneVerificationService;
 
 	// == Public Methods ==
-	
+
 	// Saves and Updates Settings
 	@Override
 	public void saveSetting(SettingDto settingDto) {
@@ -90,6 +89,5 @@ public class SettingServiceImpl implements SettingService {
 		} else {
 			return false;
 		}
-
 	}
 }

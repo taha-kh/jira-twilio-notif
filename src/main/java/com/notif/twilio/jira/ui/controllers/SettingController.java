@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.atlassian.connect.spring.AtlassianHostUser;
+
 import com.notif.twilio.jira.services.PhoneVerificationService;
 import com.notif.twilio.jira.services.SettingService;
-import com.notif.twilio.jira.services.UserService;
 import com.notif.twilio.jira.shared.dto.SettingDto;
 import com.notif.twilio.jira.shared.dto.Userdto;
 import com.notif.twilio.jira.ui.models.SettingModel;
@@ -33,7 +33,7 @@ public class SettingController {
 
 	// == Rest Controllers ==
 
-	// Called to get Setting Page
+	// EndPoint that Calls Setting Page
 	@GetMapping("/settings")
 	public String getSettingsPage(@AuthenticationPrincipal AtlassianHostUser hostUser, Model model,
 			@RequestParam("projectId") String projectId, @RequestParam("projectKey") String projectKey) {
@@ -55,7 +55,7 @@ public class SettingController {
 		return "settings";
 	}
 
-	// Saves and updates User Settings and redirects to the concerned page
+	// Endpoint Saves and updates User Settings and redirects to the concerned page
 	@PostMapping("/settings")
 	public ModelAndView handleSettings(@AuthenticationPrincipal AtlassianHostUser hostUser,
 			@ModelAttribute("settingModel") SettingModel settingModel) {
@@ -80,6 +80,7 @@ public class SettingController {
 		}
 	}
 
+	// Endpoint to check the phone number and Call Twilio Verify API
 	@PostMapping("/verifyphone")
 	public ModelAndView verifyPhone(@AuthenticationPrincipal AtlassianHostUser hostUser,
 			@ModelAttribute("VerifyPhoneModel") VerifyPhoneModel VerifyPhoneModel) {
@@ -87,17 +88,16 @@ public class SettingController {
 		// Handle the page returned
 		boolean isCodeValid = phoneVerificationService.checkVerification(VerifyPhoneModel.getVerificationCode(),
 				hostUser.getUserAccountId().orElse(null));
-		
+
 		if (isCodeValid) {
 			ModelAndView modelAndView = new ModelAndView("settingsvalidation");
 			return modelAndView;
-		}else {
+		} else {
 			ModelAndView modelAndView = new ModelAndView("verifyphone");
 			VerifyPhoneModel verifyPhoneModel = new VerifyPhoneModel();
 			verifyPhoneModel.setShowErrorMsg(true);
 			modelAndView.addObject("verifyPhoneModel", verifyPhoneModel);
 			return modelAndView;
 		}
-		
 	}
 }

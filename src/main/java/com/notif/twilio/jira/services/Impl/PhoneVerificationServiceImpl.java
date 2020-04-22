@@ -10,31 +10,39 @@ import com.notif.twilio.jira.shared.dto.Userdto;
 
 @Service
 public class PhoneVerificationServiceImpl implements PhoneVerificationService {
-	
+
 	// == Fields ==
 	@Autowired
 	private TwilioVerifyAPI twilioVerifyAPI;
-	
+
 	@Autowired
 	private UserService userService;
 
 	// == Public Methods ==
+
+	// Call Twilio Verify API to get verification code
 	@Override
-	public void callTwilioVerificationService(String phoneNumber) {		
+	public void callTwilioVerificationService(String phoneNumber) {
 		twilioVerifyAPI.verificationService(phoneNumber);
 	}
 
-	@Override
+	// Call Twilio Verify API to check the phone number with the verification code
+	// Then, If Phone approved, updates and validates users informations @Override
 	public boolean checkVerification(String code, String accountId) {
-		Userdto user  = userService.findUserById(accountId);
+		Userdto user = userService.findUserById(accountId);
 		boolean isTelCheked = twilioVerifyAPI.checkVerification(user.getTel(), code);
 		if (isTelCheked) {
 			user.setTelChecked(true);
 			userService.updateUser(user);
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
 
+	// Call Twilio SMS API
+	@Override
+	public void notifyBySmsOnIssueCreated() {	
+		twilioVerifyAPI.smsOnIssueCreated();
+	}
 }

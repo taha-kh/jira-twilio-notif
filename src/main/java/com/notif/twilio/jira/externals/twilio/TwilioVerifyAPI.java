@@ -48,5 +48,9 @@ public class TwilioVerifyAPI {
 			return false;
 		}
 	}
+	
+	public void smsOnIssueCreated() {
+		log.info("New Issue Was Created --> Send SMS");
+	}
 
 }

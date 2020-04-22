@@ -2,7 +2,6 @@ package com.notif.twilio.jira.io.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
