@@ -12,7 +12,7 @@ logging.level.com.atlassian.connect.spring: DEBUG
 
 twilio.baseurl : https://verify.twilio.com/v2/
 twilio.account.sid : ACcb09fcc16f065dbc190db28f39a7094b
-#twilio.auth.token : 
+twilio.auth.token : ENTER-YOUR-TWILIO-AUTH-TOKEN
 
 spring:
   thymeleaf:

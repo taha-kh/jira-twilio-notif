@@ -24,7 +24,7 @@ public class User {
 	
 	private String tel;
 	
-	private boolean telChecked;
+	private boolean telChecked = false;
 	
 	@OneToOne(mappedBy = "jiraUser", cascade= CascadeType.ALL)
 	private Setting setting;

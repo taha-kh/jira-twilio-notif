@@ -28,9 +28,11 @@ public class SettingServiceImpl implements SettingService {
 	private PhoneVerificationService phoneVerificationService;
 
 	// == Public Methods ==
+	
+	// Saves and Updates Settings
 	@Override
 	public void saveSetting(SettingDto settingDto) {
-		if (settingDto != null) {
+		if (settingDto != null && settingDto.getUser().getAccountId() != null) {
 			Setting setting = new Setting();
 			BeanUtils.copyProperties(settingDto, setting);
 			User user = new User();
@@ -76,8 +78,9 @@ public class SettingServiceImpl implements SettingService {
 			saveSetting(settingDto);
 
 			// Check if the user has changes his phone number
+			// Or he has not yet verified his telephone number
 			String newPhoneNumber = settingDto.getUser().getTel();
-			if (user.getTel() != newPhoneNumber) {
+			if (!(user.getTel().equals(newPhoneNumber)) || (user.isTelChecked() == false)) {
 				userService.updateUser(settingDto.getUser());
 				phoneVerificationService.callTwilioVerificationService(newPhoneNumber);
 				return true;

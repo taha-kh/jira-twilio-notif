@@ -17,8 +17,12 @@
 			<form method="post" th:object="${verifyPhoneModel}" th:action="@{/verifyphone}" style="text-align: center;">
 				<div>
 					<div>
-					<label for="verificationCode">Verification Code</label> 
-					<input name="verificationCode" type="text" th:value="${verificationCode}" class="twilio-input-text"> <br/><br/>
+						<label for="verificationCode">Verification Code</label> 
+						<input name="verificationCode" type="text" th:value="${verificationCode}" class="twilio-input-text"> <br/><br/>
+					</div>
+					<div th:if="${showErrorMsg}">
+						<p style="color:red">the code entered is incorrect</p>
+						<p style="color:red">Enter the correct code or change the phone number</p>
 					</div>
 				</div>
 	

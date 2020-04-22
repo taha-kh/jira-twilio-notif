@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService{
 			User user = userRepository.findById(userDto.getAccountId()).orElse(null);
 			if(user != null) {
 				user.setTel(userDto.getTel());
+				user.setTelChecked(userDto.isTelChecked());
 				userRepository.save(user);
 			}
 		}

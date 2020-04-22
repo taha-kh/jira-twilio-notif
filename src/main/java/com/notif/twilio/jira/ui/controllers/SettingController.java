@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.atlassian.connect.spring.AtlassianHostUser;
+import com.notif.twilio.jira.services.PhoneVerificationService;
 import com.notif.twilio.jira.services.SettingService;
 import com.notif.twilio.jira.services.UserService;
 import com.notif.twilio.jira.shared.dto.SettingDto;
@@ -27,60 +28,76 @@ public class SettingController {
 	@Autowired
 	private SettingService settingService;
 
+	@Autowired
+	private PhoneVerificationService phoneVerificationService;
 
 	// == Rest Controllers ==
-	
+
 	// Called to get Setting Page
 	@GetMapping("/settings")
 	public String getSettingsPage(@AuthenticationPrincipal AtlassianHostUser hostUser, Model model,
 			@RequestParam("projectId") String projectId, @RequestParam("projectKey") String projectKey) {
 
-		SettingModel settingModel = new SettingModel();		
+		SettingModel settingModel = new SettingModel();
 		SettingDto settingdto = settingService.getSetting(hostUser.getUserAccountId().orElse(null));
-		
-		if(settingdto != null) {
+
+		if (settingdto != null) {
 			BeanUtils.copyProperties(settingdto, settingModel);
 			UserModel userModel = new UserModel();
 			userModel.setTel(settingdto.getUser().getTel());
 			settingModel.setUser(userModel);
-		}else {
-			settingModel = new SettingModel(projectId, projectKey) ;
+		} else {
+			settingModel = new SettingModel(projectId, projectKey);
 			settingModel.setUser(new UserModel());
 		}
-		
+
 		model.addAttribute("settingModel", settingModel);
 		return "settings";
 	}
 
+	// Saves and updates User Settings and redirects to the concerned page
 	@PostMapping("/settings")
 	public ModelAndView handleSettings(@AuthenticationPrincipal AtlassianHostUser hostUser,
 			@ModelAttribute("settingModel") SettingModel settingModel) {
-		
+
 		SettingDto settingDto = new SettingDto();
-		BeanUtils.copyProperties(settingModel, settingDto);		
-		
+		BeanUtils.copyProperties(settingModel, settingDto);
+
 		Userdto userDto = new Userdto();
 		userDto.setAccountId(hostUser.getUserAccountId().orElse(null));
-		userDto.setTel(settingModel.getUser().getTel());			
-		settingDto.setUser(userDto);				
+		userDto.setTel(settingModel.getUser().getTel());
+		settingDto.setUser(userDto);
 		settingDto.setAccountId(hostUser.getUserAccountId().orElse(null));
-		
+
 		boolean verifyPhoneNumber = settingService.handleSetting(settingDto);
-		if(verifyPhoneNumber) {
+		if (verifyPhoneNumber) {
 			ModelAndView modelAndView = new ModelAndView("verifyphone");
-		    modelAndView.addObject("verifyPhoneModel", new VerifyPhoneModel());
-		    return modelAndView;
-		}			
-		else {
+			modelAndView.addObject("verifyPhoneModel", new VerifyPhoneModel());
+			return modelAndView;
+		} else {
 			ModelAndView modelAndView = new ModelAndView("settingsvalidation");
-		    return modelAndView;
+			return modelAndView;
 		}
 	}
-	
+
 	@PostMapping("/verifyphone")
-	public String verifyPhone(@AuthenticationPrincipal AtlassianHostUser hostUser,
+	public ModelAndView verifyPhone(@AuthenticationPrincipal AtlassianHostUser hostUser,
 			@ModelAttribute("VerifyPhoneModel") VerifyPhoneModel VerifyPhoneModel) {
-				
-			return "settingsvalidation";
+
+		// Handle the page returned
+		boolean isCodeValid = phoneVerificationService.checkVerification(VerifyPhoneModel.getVerificationCode(),
+				hostUser.getUserAccountId().orElse(null));
+		
+		if (isCodeValid) {
+			ModelAndView modelAndView = new ModelAndView("settingsvalidation");
+			return modelAndView;
+		}else {
+			ModelAndView modelAndView = new ModelAndView("verifyphone");
+			VerifyPhoneModel verifyPhoneModel = new VerifyPhoneModel();
+			verifyPhoneModel.setShowErrorMsg(true);
+			modelAndView.addObject("verifyPhoneModel", verifyPhoneModel);
+			return modelAndView;
+		}
+		
 	}
 }
