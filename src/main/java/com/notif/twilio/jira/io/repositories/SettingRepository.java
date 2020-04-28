@@ -1,8 +1,8 @@
 package com.notif.twilio.jira.io.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.notif.twilio.jira.io.entities.Setting;
 
-public interface SettingRepository extends CrudRepository<Setting, String>{
+public interface SettingRepository extends JpaRepository<Setting, String>{
 }

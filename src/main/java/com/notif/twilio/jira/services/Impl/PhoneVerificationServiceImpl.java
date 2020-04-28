@@ -1,11 +1,14 @@
 package com.notif.twilio.jira.services.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.notif.twilio.jira.externals.twilio.TwilioVerifyAPI;
 import com.notif.twilio.jira.services.PhoneVerificationService;
 import com.notif.twilio.jira.services.UserService;
+import com.notif.twilio.jira.shared.dto.IssueDto;
 import com.notif.twilio.jira.shared.dto.Userdto;
 
 @Service
@@ -42,7 +45,7 @@ public class PhoneVerificationServiceImpl implements PhoneVerificationService {
 
 	// Call Twilio SMS API
 	@Override
-	public void notifyBySmsOnIssueCreated() {	
-		twilioVerifyAPI.smsOnIssueCreated();
+	public void notifyBySmsOnIssueCreated(IssueDto issueDto,List<Userdto> usersToBeNotified) {	
+		twilioVerifyAPI.smsOnIssueCreated(issueDto, usersToBeNotified);
 	}
 }

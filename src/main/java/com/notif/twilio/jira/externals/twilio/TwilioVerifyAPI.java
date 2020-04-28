@@ -1,12 +1,18 @@
 package com.notif.twilio.jira.externals.twilio;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.notif.twilio.jira.shared.dto.IssueDto;
+import com.notif.twilio.jira.shared.dto.Userdto;
 import com.twilio.Twilio;
 import com.twilio.rest.verify.v2.Service;
 import com.twilio.rest.verify.v2.service.Verification;
 import com.twilio.rest.verify.v2.service.VerificationCheck;
+import com.twilio.type.PhoneNumber;
+import com.twilio.rest.api.v2010.account.Message;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,15 +20,15 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class TwilioVerifyAPI {
 
-	// == Fields ==
-	@Value("${twilio.baseurl}")
-	private String twilioBaseURL;
-
+	// == Fields ==	
 	@Value("${twilio.account.sid}")
 	private String twilioAccountSID;
 
 	@Value("${twilio.auth.token}")
 	private String twilioAuthToken;
+	
+	@Value("${twilio.phonenumber}")
+	private String twilioPhoneNumber;
 
 	private String sid;
 
@@ -49,8 +55,22 @@ public class TwilioVerifyAPI {
 		}
 	}
 	
-	public void smsOnIssueCreated() {
-		log.info("New Issue Was Created --> Send SMS");
+	public void smsOnIssueCreated(IssueDto issueDto, List<Userdto> usersToBeNotified) {
+		String smsOnIssueCreated = "An issue has been created in your Jira Project " + issueDto.getIssueUrl();
+		
+		Twilio.init(twilioAccountSID, twilioAuthToken);
+		
+		if (usersToBeNotified.size() > 0) {
+			for(Userdto user : usersToBeNotified) {
+				Message message = Message.creator(
+						new PhoneNumber(user.getTel()),
+						new PhoneNumber(twilioPhoneNumber), 
+						smsOnIssueCreated).create();
+						
+				log.info("New Issue Was Created --> " + issueDto.getIssueUrl() + "Notify " + user.getTel());
+				log.info("Message Sid --> " + message.getSid());
+			}
+		}
 	}
 
 }

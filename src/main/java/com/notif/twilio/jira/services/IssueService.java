@@ -1,5 +1,5 @@
 package com.notif.twilio.jira.services;
 
 public interface IssueService {
-	void notifyUserOnIssueCreated(String accountId);
+	void notifyUserOnIssueCreated(String baseUrl, String issueKey, String projectKey);
 }

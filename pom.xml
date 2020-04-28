@@ -12,10 +12,10 @@
 
 	<groupId>com.notif.twilio.jira</groupId>
 	<artifactId>jira-twilio-notif</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<atlassian-connect-spring-boot.version>2.0.5</atlassian-connect-spring-boot.version>
 	</properties>
 
@@ -37,7 +37,6 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.2.12</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

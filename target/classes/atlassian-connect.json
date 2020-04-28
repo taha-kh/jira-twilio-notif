@@ -1,6 +1,6 @@
 {
 	"key": "jira-twilio-notif",
-	"baseUrl": "https://53353840.ngrok.io",
+	"baseUrl": "https://56391bc3.ngrok.io",
 	"name": "Jira Twilio Notif",
 	"authentication": {
 		"type": "jwt"
@@ -37,7 +37,7 @@
 		"webhooks": [
 			{
 				"event": "jira:issue_created",
-				"url": "/issue-created"
+				"url": "/issue-created?projectKey={project.key}&issueKey={issue.key}"
 			},
 			{
 				"event": "connect_addon_enabled",

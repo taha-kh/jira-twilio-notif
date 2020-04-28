@@ -1,8 +1,9 @@
 spring.jpa.hibernate.ddl-auto: update
 spring.jpa.database: POSTGRESQL
-spring.datasource.username : postgres
-spring.datasource.password : root
-spring.datasource.url: jdbc:postgresql://localhost:5432/jira-twilio-db
+spring.datasource.url: YOUR_DATASOURCE
+spring.datasource.username : YOUR_DATASOURCE_USERNAME
+spring.datasource.password : YOUR_DATASOURCE_PASSWORD
+
 
 addon:
   key: jira-twilio-notif
@@ -10,9 +11,9 @@ addon:
 
 logging.level.com.atlassian.connect.spring: DEBUG
 
-twilio.baseurl : https://verify.twilio.com/v2/
-twilio.account.sid : ACcb09fcc16f065dbc190db28f39a7094b
-twilio.auth.token : ENTER-YOUR-TWILIO-AUTH-TOKEN
+twilio.account.sid : YOUR_TWILIO_ACCOUNT_SID
+twilio.auth.token : YOUR_TWILIO_AUTH_TOKEN
+twilio.phonenumber : YOUR_TWILIO_PHONE_NUMBER
 
 spring:
   thymeleaf:
